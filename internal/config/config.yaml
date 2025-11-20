@@ -1,0 +1,24 @@
+server:
+  port: "8080"
+  host: "0.0.0.0"
+
+database:
+  type: "sqlite"  # sqlite or mysql
+  sqlite:
+    path: "./data/gpanel.db"
+  mysql:
+    host: "localhost"
+    port: "3306"
+    database: "gpanel"
+    username: "root"
+    password: ""
+
+auth:
+  jwt_secret: "gpanel-secret-key-change-in-production"
+  token_expire: 86400  # 24 hours
+  default_user: "admin"
+  default_passwd: "admin123"
+
+ssl:
+  email: "admin@example.com"
+  staging: false

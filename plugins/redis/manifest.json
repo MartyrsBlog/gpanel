@@ -1,0 +1,15 @@
+{
+  "name": "redis",
+  "version": "1.0.0",
+  "description": "Redis management plugin for GPanel",
+  "author": "GPanel Team",
+  "entry": "redis.so",
+  "enabled": true,
+  "config": {
+    "redis_binary": "/usr/bin/redis-cli",
+    "redis_service": "redis",
+    "redis_config": "/etc/redis/redis.conf",
+    "redis_data_dir": "/var/lib/redis",
+    "backup_dir": "/opt/gpanel/backups/redis"
+  }
+}
