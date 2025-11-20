@@ -275,28 +275,32 @@ download_gpanel() {
     log_info "下载 GPanel..."
     cd /tmp
     
-    if [[ "$VERSION" == "latest" ]]; then
-        # 获取最新版本
-        LATEST_RELEASE=$(curl -s https://api.github.com/repos/your-repo/gpanel/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-        if [[ -z "$LATEST_RELEASE" ]]; then
-            log_warn "无法获取最新版本，使用默认版本"
-            VERSION="v1.0.0"
-        else
-            VERSION=$LATEST_RELEASE
-        fi
-    fi
-    
-    DOWNLOAD_URL="https://github.com/your-repo/gpanel/releases/download/${VERSION}/gpanel-${VERSION}.tar.gz"
-    
-    if ! wget -q $DOWNLOAD_URL; then
-        log_error "下载失败，请检查网络连接"
+    # 克隆源码仓库
+    if ! git clone https://github.com/MartyrsBlog/gpanel.git; then
+        log_error "克隆仓库失败，请检查网络连接"
         exit 1
     fi
     
-    tar -xzf gpanel-${VERSION}.tar.gz
-    cp -r gpanel-${VERSION}/* $INSTALL_DIR/
+    # 复制源码到安装目录
+    cp -r gpanel/* $INSTALL_DIR/
     
-    rm -rf gpanel-${VERSION}*
+    # 构建前端
+    log_info "构建前端..."
+    cd $INSTALL_DIR/web
+    npm install
+    npm run build
+    
+    # 构建后端
+    log_info "构建后端..."
+    cd $INSTALL_DIR
+    export PATH=$PATH:/usr/local/go/bin
+    go mod download
+    go build -o gpanel cmd/server/main.go
+    
+    # 清理临时文件
+    rm -rf /tmp/gpanel
+    
+    log_info "GPanel 构建完成"
 }
 
 # 设置权限
