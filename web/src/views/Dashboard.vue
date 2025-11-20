@@ -158,7 +158,7 @@ import {
   GridComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
-import { getSystemMonitor } from '@/api/system'
+import systemApi from '@/api/system'
 
 // 注册 ECharts 组件
 use([
@@ -335,7 +335,7 @@ const networkChartOption = computed(() => ({
 // 获取系统监控数据
 const fetchSystemData = async () => {
   try {
-    const response = await getSystemMonitor()
+    const response = await systemApi.getMonitor()
     systemInfo.value = response.data
   } catch (error) {
     console.error('获取系统数据失败:', error)

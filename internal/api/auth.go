@@ -9,7 +9,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // LoginRequest 登录请求结构体
@@ -122,7 +121,6 @@ func Logout(c *gin.Context) {
 // GetUserInfo 获取当前用户信息
 func GetUserInfo(c *gin.Context) {
 	username, _ := c.Get("username")
-	role, _ := c.Get("role")
 
 	var userInfo UserInfo
 	err := config.DB.QueryRow(

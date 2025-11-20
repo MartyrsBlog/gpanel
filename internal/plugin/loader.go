@@ -152,7 +152,7 @@ func (l *Loader) GetPluginInfos() []PluginInfo {
 	defer l.mutex.RUnlock()
 
 	var pluginInfos []PluginInfo
-	for name, pluginInstance := range l.plugins {
+	for _, pluginInstance := range l.plugins {
 		pluginInfo := PluginInfo{
 			Name:        pluginInstance.Name(),
 			Version:     pluginInstance.Version(),

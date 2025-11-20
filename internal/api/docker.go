@@ -8,7 +8,6 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/client"
 	"github.com/gin-gonic/gin"
 )
@@ -406,7 +405,7 @@ func PullImage(c *gin.Context) {
 	}
 	defer cli.Close()
 
-	reader, err := cli.ImagePull(context.Background(), fullImageName, image.PullOptions{})
+	reader, err := cli.ImagePull(context.Background(), fullImageName, types.ImagePullOptions{})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    500,

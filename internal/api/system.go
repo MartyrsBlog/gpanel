@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"runtime"
 
-	"gpanel/internal/config"
-
 	"github.com/gin-gonic/gin"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/disk"
@@ -227,7 +225,11 @@ func GetProcessList(c *gin.Context) {
 
 	for _, p := range processes {
 		name, _ := p.Name()
-		status, _ := p.Status()
+		statusSlice, _ := p.Status()
+		var status string
+		if len(statusSlice) > 0 {
+			status = statusSlice[0]
+		}
 		cpuPercent, _ := p.CPUPercent()
 		memInfo, _ := p.MemoryInfo()
 		memPercent, _ := p.MemoryPercent()

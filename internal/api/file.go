@@ -11,8 +11,6 @@ import (
 	"strconv"
 	"strings"
 
-	"gpanel/internal/config"
-
 	"github.com/gin-gonic/gin"
 )
 
