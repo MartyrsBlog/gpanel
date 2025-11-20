@@ -299,7 +299,7 @@ download_gpanel() {
     export PATH=$PATH:/usr/local/go/bin
     go mod download
     go mod tidy
-    go build -o gpanel cmd/server/main.go
+    CGO_ENABLED=1 go build -o gpanel cmd/server/main.go
     
     # 清理临时文件
     rm -rf /tmp/gpanel
