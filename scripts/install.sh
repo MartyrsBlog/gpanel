@@ -275,6 +275,9 @@ download_gpanel() {
     log_info "下载 GPanel..."
     cd /tmp
     
+    # 清理可能存在的旧目录
+    rm -rf gpanel
+    
     # 克隆源码仓库
     if ! git clone https://github.com/MartyrsBlog/gpanel.git; then
         log_error "克隆仓库失败，请检查网络连接"
@@ -295,6 +298,7 @@ download_gpanel() {
     cd $INSTALL_DIR
     export PATH=$PATH:/usr/local/go/bin
     go mod download
+    go mod tidy
     go build -o gpanel cmd/server/main.go
     
     # 清理临时文件
