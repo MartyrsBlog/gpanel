@@ -209,9 +209,6 @@ install_docker() {
     systemctl enable docker
     systemctl start docker
     
-    # 添加当前用户到docker组
-    usermod -aG docker $USER
-    
     log_info "Docker 安装完成"
 }
 
@@ -252,11 +249,16 @@ install_nginx() {
 create_user() {
     if id "$USER" &>/dev/null; then
         log_info "用户 $USER 已存在"
-        return
+    else
+        log_info "创建用户: $USER"
+        useradd -r -s /bin/false -d $INSTALL_DIR $USER
     fi
     
-    log_info "创建用户: $USER"
-    useradd -r -s /bin/false -d $INSTALL_DIR $USER
+    # 如果安装了Docker，将用户添加到docker组
+    if [[ "$WITH_DOCKER" == "true" ]] && command_exists docker; then
+        log_info "将用户 $USER 添加到docker组"
+        usermod -aG docker $USER
+    fi
 }
 
 # 创建目录
