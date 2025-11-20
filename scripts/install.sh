@@ -108,13 +108,13 @@ install_dependencies() {
     
     case $OS in
         "Ubuntu"|"Debian"*)
-            apt install -y curl wget git unzip tar sudo
+            apt install -y curl wget git unzip tar sudo gcc libc6-dev
             ;;
         "CentOS"*|"Red Hat"*)
-            yum install -y curl wget git unzip tar sudo
+            yum install -y curl wget git unzip tar sudo gcc glibc-devel
             ;;
         "Arch Linux")
-            pacman -S --noconfirm curl wget git unzip tar sudo
+            pacman -S --noconfirm curl wget git unzip tar sudo gcc
             ;;
     esac
 }
